@@ -25,3 +25,7 @@ the necessary informations for the given host `hostname` can be extracted direct
      WHERE glpi_states.id=glpi_computers.states_id
        AND glpi_computers.name='hostname'
        AND glpi_plugin_customfields_computers.id=glpi_computers.id;
+
+### Requirements
+
+MySQL Python library.
