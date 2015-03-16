@@ -19,11 +19,11 @@ db = MySQLdb.connect(host=dbhost, # your host, usually localhost
 #  you execute all the queries you need
 cur = db.cursor() 
 
-query="SELECT glpi_computers.name,glpi_states.name,glpi_plugin_customfields_computers.puppetrole \
+query="SELECT glpi_computers.name,glpi_states.name,glpi_plugin_customfields_computers.%s \
 FROM glpi_plugin_customfields_computers,glpi_computers,glpi_states \
 WHERE glpi_states.id=glpi_computers.states_id \
 AND glpi_computers.name='%s' \
-AND glpi_plugin_customfields_computers.id=glpi_computers.id"%host
+AND glpi_plugin_customfields_computers.id=glpi_computers.id"%(puppetrole,host)
 #print query
 #sys.exit(0)
 cur.execute(query)
