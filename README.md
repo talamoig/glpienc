@@ -1,6 +1,6 @@
 # Puppet ENC from GLPI
 
-This code makes possible to use GLPI as an [ENC](https://docs.puppetlabs.com/guides/external_nodes.html) for Puppet.
+This code makes possible to use [GLPI](http://www.glpi-project.org/spip.php?lang=en) as an [ENC](https://docs.puppetlabs.com/guides/external_nodes.html) for Puppet.
 
 The basic idea is that:
  
