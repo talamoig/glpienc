@@ -1,0 +1,4 @@
+dbuser='dbuser'
+dbhost='db-host'
+dbpasswd='dbpassword'
+dbname='glpi'
