@@ -51,4 +51,4 @@ env=rows[0][1].replace(' ','-')
 role=rows[0][2]
 print "---"
 print "   environment: %s"%env
-print "   role: %s"%role
+print "   classes: %s"%role
