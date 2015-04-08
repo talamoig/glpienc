@@ -20,7 +20,7 @@ class glpienc (
   file{'/usr/sbin/glpienc.py':
     ensure  => present,
     mode    => 0744,
-    content => 'puppet:///modules/glpienc/glpienc.py',
+    source  => 'puppet:///modules/glpienc/glpienc.py',
   }
   
 }
