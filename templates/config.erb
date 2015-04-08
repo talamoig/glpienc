@@ -3,6 +3,9 @@ dbhost='<%= @dbhost %>'
 dbpasswd='<%= @dbpasswd %>'                                                                                                                                                  
 dbname='<%= @dbname %>'                                                                                                                                                     
 puppetrole='<%= @puppetrole %>'
+<%if domainremove %>
+<% then %>
+domainremove=True
+<% else %>
 domainremove=False
-
-
+<% end %>
