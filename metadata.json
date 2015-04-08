@@ -1,0 +1,32 @@
+{
+  "name": "talamoig-glpienc",
+  "version": "0.0.1",
+  "author": "talamoig",
+  "summary": "GLPI Puppet ENC module",
+  "license": "Apache-2.0",
+  "source": "https://github.com/talamoig/puppet-enc-glpi",
+  "issues_url": "https://github.com/talamoig/puppet-enc-glpi/issues",
+  "project_page": "https://github.com/talamoig/puppet-enc-glpi",
+  "description": "Puppet module for GLPI Puppet ENC",
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "operatingsystem_support": [
+       {
+	"operatingsystem":"RedHat",
+	"operatingsystemrelease":[ "6" ]
+       },
+       {
+      "operatingsystem": "ScientificLinux",
+      "operatingsystemrelease": [ "6" ]
+      },
+       {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [ "6" ]
+      }
+      ],
+  "dependencies": []
+}
