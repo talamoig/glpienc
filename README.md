@@ -34,7 +34,8 @@ To install it you need information access to the GLPI database, ie:
 
 Consider that is safer to create a special DB user for this task, giving it select-only access to the DB.
 
-Furthermore the additional `domainremove` parameter is added. If this parameter is set to `true`
+There is also the optional parameter `domainremove`, that defaults to `false`.
+If this parameter is set to `true`
 the query against the database will be made only for the hostname part, without the domain part, ie. if 
 you invoke the ENC against `my-hostname.domain.at.com` the query on the database will be performed for
 `my-hostname` only. This is an useful option since puppet uses FQDN while maybe you don't keep the FQDN
