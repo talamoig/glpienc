@@ -43,12 +43,12 @@ inside GLPI (tipical inside a single domain case).
 To install inside puppet:
 
     class {'glpienc':
-   	  dbuser     => 'glpi-user',
-	  dbhost     => 'glpi-host',
-	  dbpasswd   => 'glpi-passwd',
-	  dbname     => 'glpi',
-	  puppetrole => 'puppetrole',
-	  domainremove=true,
+   	  dbuser       => 'glpi-user',
+	  dbhost       => 'glpi-host',
+	  dbpasswd     => 'glpi-passwd',
+	  dbname       => 'glpi',
+	  puppetrole   => 'puppetrole',
+	  domainremove => true,
     }
 
 
