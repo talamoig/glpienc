@@ -17,9 +17,9 @@ class glpienc (
     require => File['/etc/glpienc']
   }
   
-  file{'/usr/sbin/glpienc.py':
+  file{'/usr/bin/glpienc.py':
     ensure  => present,
-    mode    => 0744,
+    mode    => 0755,
     source  => 'puppet:///modules/glpienc/glpienc.py',
   }
   
