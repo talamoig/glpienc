@@ -53,3 +53,5 @@ print "---"
 print "   environment: %s"%env
 if role!=None:
     print "   classes: %s"%role
+    print "   parameters:"
+    print "      role: %s"%role.split('::')[1]
