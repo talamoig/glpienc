@@ -50,7 +50,7 @@ inside GLPI (tipical in a single domain scenario).
  - if it can access the GLPI database, it will make a copy of the generated yaml content on a SQLite database file, 
  - if it cannot access the GLPI database, will retrieve yaml content from the SQLite file.
 
-### Installing
+### Installation
 
 To install inside puppet:
 
@@ -65,6 +65,11 @@ To install inside puppet:
 
 The default location of the fallback file is `/var/local/glpienc/glpienc.db` but you can change by passing
 the `fallbackfile` parameter on the class.
+
+The fallback file is *not* created automatically. You can create it with the right schema after *glpienc* class is
+installed with the following command:
+
+    sqlite3 /var/local/glpienc/glpienc.db < /var/local/glpienc/sqlite-schema.sql
 
 ### Requirements
 
