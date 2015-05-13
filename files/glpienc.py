@@ -8,7 +8,7 @@ if len(sys.argv)!=2:
     sys.stderr.write("Usage: %s <hostname>\n"%sys.argv[0])
     sys.exit(1)
 
-configfiles=['/etc/glpienc/config.py','config.py']
+configfiles=['/etc/glpienc/config.py', 'config.py']
 
 configured=False
 for conffile in configfiles:
@@ -34,9 +34,10 @@ def mysql_cursor():
     return db.cursor() 
 
 def hostlist_fromdb(cur):
-    query="SELECT glpi_computers.name FROM glpi_computers"
+    query="SELECT glpi_computers.name FROM glpi_computers WHERE is_template=0 AND is_deleted=0"
     cur.execute(query)
-    rows.cur.fetchall()
+    rows=cur.fetchall()
+    rows=[r[0] for r in rows]
     return rows
 
 def yaml_fromdb(cur,host):
@@ -45,12 +46,15 @@ def yaml_fromdb(cur,host):
 FROM glpi_plugin_customfields_computers,glpi_computers,glpi_states \
 WHERE glpi_states.id=glpi_computers.states_id \
 AND glpi_computers.name='%s' \
-AND glpi_plugin_customfields_computers.id=glpi_computers.id"%(puppetrole,host)
+AND glpi_plugin_customfields_computers.id=glpi_computers.id \
+AND is_deleted=0"%(puppetrole,host)
     cur.execute(query)
     rows=cur.fetchall()
     yaml=""
     if len(rows)!=1:
         sys.stderr.write("query returned %s results. Expecting 1\n"%len(rows))
+        sys.stderr.write("hostname 1:"+rows[0][0])
+        sys.stderr.write("hostname 1:"+rows[1][0])
         sys.exit(1)
     host=rows[0][0]
     env=rows[0][1].replace(' ','-')
@@ -63,34 +67,40 @@ AND glpi_plugin_customfields_computers.id=glpi_computers.id"%(puppetrole,host)
     return yaml
 
 def sqlite_cursor():
-    global falbackfile
-    con=sqlite3.connect(fallbackfile)
-    return con.cursor()
+    global fallbackfile
+    global sqlite_con
+    sqlite_con=sqlite3.connect(fallbackfile)
+    return sqlite_con.cursor()
 
 def yaml_fromsqlite(cur,host):
-    global cur
-    cur.execute('SELECT SQLITE_VERSION()')
+    cur.execute("SELECT yaml FROM hostyaml WHERE host='%s'"%host)
     data = cur.fetchone()
-    return data
+    return data[0]
 
-source=''
-try:
-    cur=connect_to_mysql()
-    source='mysql'
-except MySQLdb.OperationalError as e:
-    source='sqlite'
-    sys.stderr.write("Connecting to the DB failed with the following error:\n")
-    sys.stderr.write(e[1]+"\n")
-    sys.stderr.write("Falling-back to SQLLite backup\n")
+def update_sqlite(cur,host,yaml):
+    cur.execute("REPLACE INTO hostyaml VALUES('%s','%s')"%(host,yaml))
 
 host=sys.argv[1]
 if domainremove:
     host=host.split('.')[0]
+try:
+    sqlite_cur=sqlite_cursor()
+except sqlite3.OperationalError as e:
+    print e[1]
+    sys.exit(1)
 
-if source=='mysql':
-    yaml=yaml_fromdb(cur,host)
-if source='sqlite':
-    cur=sqlite_cursor()
-    yaml=yaml_fromsqlite(cur,host)
-    
-# replace into hostyaml values ('sdsdff','sdsdff');
+try:
+    cur=mysql_cursor()
+    hostlist=hostlist_fromdb(cur)
+    for host in hostlist:
+        yaml=yaml_fromdb(cur,host)
+        update_sqlite(sqlite_cur,host,yaml)
+except MySQLdb.OperationalError as e:
+    sys.stderr.write("Connecting to the DB failed with the following error:\n")
+    sys.stderr.write(e[1]+"\n")
+    sys.stderr.write("Falling-back to SQLLite backup\n")
+
+yaml=yaml_fromsqlite(sqlite_cur,host)
+print yaml
+sqlite_con.commit()
+sqlite_con.close()

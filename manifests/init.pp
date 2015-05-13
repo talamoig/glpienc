@@ -5,10 +5,20 @@ class glpienc (
   $dbname,
   $puppetrole,
   $domainremove = false,
+  $default_fallbackfile = '/var/glpienc/glpienc.db',
 )
 {
   file{'/etc/glpienc':
     ensure => directory,
+  }
+
+  file{'/var/glpienc':
+    ensure => directory,
+  }
+
+  file{'/var/glpienc/sqlite-schema.sql':
+    ensure => present,
+    source => 'puppet:///modules/glpienc/sqlite-schema.sql',
   }
   
   file{'/etc/glpienc/config.py':
