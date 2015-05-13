@@ -34,7 +34,13 @@ To install it you need information access to the GLPI database, ie:
 
 Consider that is safer to create a special DB user for this task, giving it select-only access to the DB.
 
-### Ignore the domain part
+#### When MySQL database cannot be accessed
+
+*glpienc* has a fallback mechanism, ie. every time it is invoked:
+ - if it can access the GLPI database, it will make a copy of the generated yaml content of each host on a SQLite database file;
+ - if it cannot access the GLPI database, it will retrieve yaml content from the SQLite file.
+
+### Ignoring the host domain
 
 *glpienc* has the `domainremove` parameter, that defaults to `false`.
 If this parameter is set to `true`
@@ -42,13 +48,6 @@ the query against the database will be made only for the hostname part, without 
 you invoke the ENC against `my-hostname.domain.at.com` the query on the database will be performed for
 `my-hostname` only). This is an useful option since puppet uses FQDN while maybe you don't keep the FQDN
 inside GLPI (tipical in a single domain scenario).
-
-
-#### When MySQL database cannot be accessed
-
-*glpienc* has a fallback mechanism, ie. every time it is invoked:
- - if it can access the GLPI database, it will make a copy of the generated yaml content on a SQLite database file, 
- - if it cannot access the GLPI database, will retrieve yaml content from the SQLite file.
 
 ### Installation
 
@@ -66,7 +65,7 @@ To install inside puppet:
 The default location of the fallback file is `/var/local/glpienc/glpienc.db` but you can change by passing
 the `fallbackfile` parameter on the class.
 
-The fallback file is *not* created automatically. You can create it with the right schema after *glpienc* class is
+The fallback file is *not* created automatically. You can create it with the right schema after `glpienc` class is
 installed with the following command:
 
     sqlite3 /var/local/glpienc/glpienc.db < /var/local/glpienc/sqlite-schema.sql
