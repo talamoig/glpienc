@@ -12,11 +12,11 @@ class glpienc (
     ensure => directory,
   }
 
-  file{'/var/glpienc':
+  file{'/var/local/glpienc':
     ensure => directory,
   }
 
-  file{'/var/glpienc/sqlite-schema.sql':
+  file{'/var/local/glpienc/sqlite-schema.sql':
     ensure => present,
     source => 'puppet:///modules/glpienc/sqlite-schema.sql',
   }
