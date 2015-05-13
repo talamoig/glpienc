@@ -83,6 +83,7 @@ def update_sqlite(cur,host,yaml):
 host=sys.argv[1]
 if domainremove:
     host=host.split('.')[0]
+
 try:
     sqlite_cur=sqlite_cursor()
 except sqlite3.OperationalError as e:

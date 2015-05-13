@@ -1,4 +1,4 @@
-# Puppet ENC from GLPI
+# GLPIEnc - Puppet ENC from GLPI
 
 This code makes possible to use [GLPI](http://www.glpi-project.org/spip.php?lang=en) as an [ENC](https://docs.puppetlabs.com/guides/external_nodes.html) for Puppet.
 
@@ -22,7 +22,7 @@ the necessary informations for the given host `hostname` can be extracted direct
        AND glpi_plugin_customfields_computers.id=glpi_computers.id;
 
 
-This tool is provided as a puppet module, that will be usually installed on the puppet master.
+*glpienc* is provided as a puppet module, that will be usually installed on the puppet master.
 
 To install it you need information access to the GLPI database, ie:
 
@@ -41,6 +41,12 @@ you invoke the ENC against `my-hostname.domain.at.com` the query on the database
 `my-hostname` only. This is an useful option since puppet uses FQDN while maybe you don't keep the FQDN
 inside GLPI (tipical inside a single domain case).
 
+*glpienc* has also a fallback mechanism, ie. every time it is invoked if it can access the GLPI database
+will make a copy of it on a SQLite database file. It will not copy everything but just the *yaml* associated
+to a host.
+So, as soon as it cannot access the GLPI database, *glpienc* will fallback to the SQLite database for retrieving
+the hosts yaml.
+
 To install inside puppet:
 
     class {'glpienc':
@@ -52,7 +58,9 @@ To install inside puppet:
 	  domainremove => true,
     }
 
+The default location of the fallback file is `/var/local/glpienc/glpienc.db` but you can change by passing
+the `fallbackfile` parameter on the class.
 
 ### Requirements
 
-MySQL Python library.
+MySQL SQLite 3 Python libraries.
