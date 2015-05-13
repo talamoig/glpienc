@@ -92,9 +92,9 @@ except sqlite3.OperationalError as e:
 try:
     cur=mysql_cursor()
     hostlist=hostlist_fromdb(cur)
-    for host in hostlist:
-        yaml=yaml_fromdb(cur,host)
-        update_sqlite(sqlite_cur,host,yaml)
+    for h in hostlist:
+        yaml=yaml_fromdb(cur,h)
+        update_sqlite(sqlite_cur,h,yaml)
 except MySQLdb.OperationalError as e:
     sys.stderr.write("Connecting to the DB failed with the following error:\n")
     sys.stderr.write(e[1]+"\n")
