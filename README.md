@@ -1,8 +1,7 @@
 # GLPIEnc - Puppet ENC from GLPI
 
 A tool to use [GLPI](http://www.glpi-project.org/spip.php?lang=en) as an [ENC](https://docs.puppetlabs.com/guides/external_nodes.html) for Puppet.
-
-Consider that this tool makes use of the *roles and profiles* [pattern](http://www.craigdunn.org/2012/05/239/).
+It assumes you're adopting the *roles and profiles* [pattern](http://www.craigdunn.org/2012/05/239/) but it can be used anywhere with a few changes.
 
 The basic idea is that:
  
