@@ -63,7 +63,7 @@ AND is_deleted=0"%(puppetrole,host)
     if role!=None:
         yaml=yaml+"\n   classes: %s"%role
         yaml=yaml+"\n   parameters:"
-        yaml=yaml+"\n      role: %s"%role.split('::')[1]
+        yaml=yaml+"\n      role: %s"%"::".join(role.split('::')[1:])
     return yaml
 
 def sqlite_cursor():
