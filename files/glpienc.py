@@ -51,8 +51,11 @@ AND is_deleted=0"%(puppetrole,host)
     cur.execute(query)
     rows=cur.fetchall()
     yaml=""
-    if len(rows)!=1:
-        sys.stderr.write("query returned %s results. Expecting 1\n"%len(rows))
+    if len(rows)==0:
+        sys.stderr.write("0 records for host '%s'\n"%host)
+        return '---\n'
+    if len(rows)>1:
+        sys.stderr.write("query for host %s returned %s results. Expecting 1\n"%(host,len(rows)))
         sys.stderr.write("hostname 1:"+rows[0][0])
         sys.stderr.write("hostname 1:"+rows[1][0])
         sys.exit(1)
