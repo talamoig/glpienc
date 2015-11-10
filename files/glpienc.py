@@ -41,18 +41,16 @@ def hostlist_fromdb(cur):
     return rows
 
 def yaml_fromdb(cur,host):
-    global puppetrole
-    query="SELECT glpi_computers.name,glpi_states.name,glpi_plugin_customfields_computers.%s \
-FROM glpi_plugin_customfields_computers,glpi_computers,glpi_states \
-WHERE glpi_states.id=glpi_computers.states_id \
+    query="SELECT glpi_computers.name,glpi_states.name,glpi_groups.name \
+FROM glpi_computers, glpi_groups, glpi_states \
+WHERE is_template=0 AND is_deleted=0 \
 AND glpi_computers.name='%s' \
-AND glpi_plugin_customfields_computers.id=glpi_computers.id \
-AND is_deleted=0"%(puppetrole,host)
+AND glpi_computers.groups_id=glpi_groups.id AND glpi_states.id=glpi_computers.states_id"%host
     cur.execute(query)
     rows=cur.fetchall()
     yaml=""
     if len(rows)==0:
-        sys.stderr.write("0 records for host '%s'\n"%host)
+        sys.stderr.write("Warning: host '%s' not found in the db\n"%host)
         return '---\n'
     if len(rows)>1:
         sys.stderr.write("query for host %s returned %s results. Expecting 1\n"%(host,len(rows)))
