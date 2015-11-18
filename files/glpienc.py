@@ -63,7 +63,7 @@ AND glpi_computers.groups_id=glpi_groups.id AND glpi_states.id=glpi_computers.st
     yaml="---\n   environment: %s"%env
     if role!=None:
         yaml=yaml+"\n   classes:"
-        yaml=yaml+"\n     - role::%s"%role
+        yaml=yaml+"\n     - %s"%role
     return yaml
 
 def sqlite_cursor():
