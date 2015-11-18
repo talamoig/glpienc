@@ -41,7 +41,14 @@ def hostlist_fromdb(cur):
     return rows
 
 def yaml_fromdb(cur,host):
-    query="SELECT glpi_computers.name,glpi_states.name,glpi_groups.name \
+    if statusenv:
+        query="SELECT glpi_computers.name, glpi_groups.name \
+FROM glpi_computers, glpi_groups, \
+WHERE is_template=0 AND is_deleted=0 \
+AND glpi_computers.name='%s' \
+AND glpi_computers.groups_id=glpi_groups.id"%host
+    else:
+        query="SELECT glpi_computers.name,glpi_states.name,glpi_groups.name \
 FROM glpi_computers, glpi_groups, glpi_states \
 WHERE is_template=0 AND is_deleted=0 \
 AND glpi_computers.name='%s' \
@@ -60,7 +67,9 @@ AND glpi_computers.groups_id=glpi_groups.id AND glpi_states.id=glpi_computers.st
     host=rows[0][0]
     env=rows[0][1].replace(' ','-')
     role=rows[0][2]
-    yaml="---\n   environment: %s"%env
+    yaml="---\n"
+    if statusenv:
+        yaml=yaml+"   environment: %s"%env
     if role!=None:
         yaml=yaml+"\n   classes:"
         yaml=yaml+"\n     - %s"%role

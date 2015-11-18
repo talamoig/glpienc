@@ -4,6 +4,7 @@ class glpienc (
   $dbpasswd,
   $dbname,
   $puppetrole,
+  $statusasenv    = true,
   $domainremove   = false,
   $enablefallback = true,
   $fallbackfile   = '/var/local/glpienc/glpienc.db',

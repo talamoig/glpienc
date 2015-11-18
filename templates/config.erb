@@ -1,6 +1,7 @@
 dbuser='<%= @dbuser %>'                                                                                                                       
 dbhost='<%= @dbhost %>'                                                                                                                                                      
-dbpasswd='<%= @dbpasswd %>'                                                                                                                                                  
+dbpasswd='<%= @dbpasswd %>'
+
 dbname='<%= @dbname %>'                                                                                                                                                     
 puppetrole='<%= @puppetrole %>'
 <%if @domainremove %>
@@ -10,3 +11,9 @@ domainremove=False
 <% end %>
 fallback=True
 fallbackfile='<%= @fallbackfile %>'
+
+<%if @statusasenv  %>
+statusenv=True
+<% else %>
+statusenv=False
+<% end %>
