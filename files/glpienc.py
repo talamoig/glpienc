@@ -43,7 +43,7 @@ def hostlist_fromdb(cur):
 def yaml_fromdb(cur,host):
     if statusenv:
         query="SELECT glpi_computers.name, glpi_groups.name \
-FROM glpi_computers, glpi_groups, \
+FROM glpi_computers, glpi_groups \
 WHERE is_template=0 AND is_deleted=0 \
 AND glpi_computers.name='%s' \
 AND glpi_computers.groups_id=glpi_groups.id"%host
