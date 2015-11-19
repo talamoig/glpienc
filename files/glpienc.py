@@ -65,8 +65,11 @@ AND glpi_computers.groups_id=glpi_groups.id AND glpi_states.id=glpi_computers.st
         sys.stderr.write("hostname 1:"+rows[1][0])
         sys.exit(1)
     host=rows[0][0]
-    env=rows[0][1].replace(' ','-')
-    role=rows[0][2]
+    if statusenv:
+        env=rows[0][1].replace(' ','-')
+        role=rows[0][2]
+    else:
+        role=rows[0][1]
     yaml="---\n"
     if statusenv:
         yaml=yaml+"   environment: %s"%env
