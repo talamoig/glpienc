@@ -66,10 +66,10 @@ To install inside puppet:
 The default location of the fallback file is `/var/local/glpienc/glpienc.db` but you can change by passing
 the `fallbackfile` parameter on the class.
 
-The fallback file is *not* created automatically. You can create it with the right schema after `glpienc` class is
-installed with the following command:
 
-    sqlite3 /var/local/glpienc/glpienc.db < /var/local/glpienc/sqlite-schema.sql
+The fallback file is created automatically with the following statement:
+
+	CREATE TABLE hostyaml (host VARCHAR, yaml VARCHAR, PRIMARY KEY (host));
 
 ### Requirements
 
