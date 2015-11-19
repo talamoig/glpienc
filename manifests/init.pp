@@ -21,6 +21,10 @@ class glpienc (
     ensure => present,
     source => 'puppet:///modules/glpienc/sqlite-schema.sql',
   }
+
+  exec{'/usr/bin/sqlite3 /var/local/glpienc/glpienc.db "CREATE TABLE hostyaml (host VARCHAR, yaml VARCHAR, PRIMARY KEY (host));"':
+    creates => $fallbackfile,   
+  }
   
   file{'/etc/glpienc/config.py':
     ensure  => present,
