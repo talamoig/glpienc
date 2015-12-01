@@ -41,7 +41,7 @@ def hostlist_fromdb(cur):
     return rows
 
 def yaml_fromdb(cur,host):
-    if statusenv:
+    if not statusenv:
         query="SELECT glpi_computers.name, glpi_groups.name \
 FROM glpi_computers, glpi_groups \
 WHERE is_template=0 AND is_deleted=0 \
