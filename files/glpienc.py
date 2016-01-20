@@ -76,7 +76,7 @@ AND glpi_computers.groups_id=glpi_groups.id AND glpi_states.id=glpi_computers.st
     if role!=None:
         yaml=yaml+"\n   classes:"+"\n     - %s"%role
         rolelast=role.split("::")[-1]
-        yaml=yaml+"\n   parameters:\n     - role: %s"%rolelast
+        yaml=yaml+"\n   parameters:\n     role: %s"%rolelast
     return yaml
 
 def sqlite_cursor():
